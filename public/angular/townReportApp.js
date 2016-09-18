@@ -63,10 +63,9 @@ var locationListCtrl = function ($scope, trData, geolocation) {
   
   // if geolocation is successful
   $scope.getData = function (position) {
-<<<<<<< HEAD
+
     console.log(position);
-=======
->>>>>>> e8546366bce17a87c678da0cb050380cc9e2aa30
+
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
     $scope.message = "Searching for nearby places";
@@ -105,7 +104,7 @@ var locationListCtrl = function ($scope, trData, geolocation) {
 };
   
 angular
-  .module('ltownReportApp')
+  .module('townReportApp')
   .controller('locationListCtrl', locationListCtrl)
   .filter('formatDistance', formatDistance)
   .directive('ratingStars', ratingStars)
