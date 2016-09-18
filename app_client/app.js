@@ -1,6 +1,6 @@
 (function() {
   
-  angular.module('loc8rApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap']);
+  angular.module('townReportApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap']);
 
   // config function to hold route definitions
   function config ($routeProvider, $locationProvider) {
@@ -39,7 +39,7 @@
   }
 
   angular
-    .module('loc8rApp')
+    .module('townReportApp')
     .config(['$routeProvider', '$locationProvider', config]);
   
 })();

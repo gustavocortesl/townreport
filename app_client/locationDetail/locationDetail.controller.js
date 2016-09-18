@@ -1,21 +1,20 @@
 (function () {
 
   angular
-    .module('loc8rApp')
+    .module('townReportApp')
     .controller('locationDetailCtrl', locationDetailCtrl);
 
-  //locationDetailCtrl.$inject = ['$routeParams', 'loc8rData'];
-  locationDetailCtrl.$inject = ['$routeParams', '$location', '$uibModal', 'loc8rData', 'authentication'];
-  //function locationDetailCtrl ($routeParams, loc8rData) {
-  function locationDetailCtrl ($routeParams, $location, $uibModal, loc8rData, authentication) {
+  //locationDetailCtrl.$inject = ['$routeParams', 'trData'];
+  locationDetailCtrl.$inject = ['$routeParams', '$location', '$uibModal', 'trData', 'authentication'];
+  //function locationDetailCtrl ($routeParams, trData) {
+  function locationDetailCtrl ($routeParams, $location, $uibModal, trData, authentication) {
     var vm = this;
-    vm.mapsKey = process.env.MAPS_KEY;
     vm.locationid = $routeParams.locationid;
     vm.pageHeader = {
       title: vm.locationid
     };
     
-    loc8rData.locationById(vm.locationid)
+    trData.locationById(vm.locationid)
       .success(function(data) {
         vm.data = { location: data };
         //console.log('process.env',process.env);

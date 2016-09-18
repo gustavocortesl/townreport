@@ -1,7 +1,7 @@
 (function() {
 
   angular
-    .module('loc8rApp')
+    .module('townReportApp')
     .service('geolocation', geolocation);
 
   function geolocation () {

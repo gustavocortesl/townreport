@@ -1,7 +1,7 @@
 (function () {
   
   angular
-    .module('loc8rApp')
+    .module('townReportApp')
     .directive('pageHeader', pageHeader);
 
   function pageHeader () {

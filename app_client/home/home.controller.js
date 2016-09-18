@@ -1,20 +1,20 @@
 (function() {
 
   angular
-    .module('loc8rApp')
+    .module('townReportApp')
     .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['$scope', 'loc8rData', 'geolocation'];
-  function homeCtrl ($scope, loc8rData, geolocation) {
+  homeCtrl.$inject = ['$scope', 'trData', 'geolocation'];
+  function homeCtrl ($scope, trData, geolocation) {
     var vm = this;
 
     vm.pageHeader = {
-      title: 'Loc8r',
-      strapline: 'Find places to work with wifi near you!'
+      title: 'TownReport',
+      strapline: 'Help local administration to know where the problems are!'
     };
 
     vm.sidebar = {
-      content: "Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for."
+      content: "Looking for wifi and a seat? TownReport helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for."
     };
 
     vm.message = "Checking your location";
@@ -23,7 +23,7 @@
       var lat = position.coords.latitude,
           lng = position.coords.longitude;
       vm.message = "Searching for nearby places";
-      loc8rData.locationByCoords(lat, lng)
+      trData.locationByCoords(lat, lng)
         .success(function(data) {
           vm.message = data.length > 0 ? "" : "No locations found nearby";
           vm.data = { locations: data };

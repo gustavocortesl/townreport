@@ -1,18 +1,18 @@
 (function () {
   
   angular
-    .module('loc8rApp')
+    .module('townReportApp')
     .service('authentication', authentication);
 
   authentication.$inject = ['$http', '$window'];
   function authentication ($http, $window) {
     
     var saveToken = function (token) {
-      $window.localStorage['loc8r-token'] = token;
+      $window.localStorage['townreport-token'] = token;
     };
     
     var getToken = function () {
-      return $window.localStorage['loc8r-token'];
+      return $window.localStorage['townreport-token'];
     };
     
     var isLoggedIn = function() {
@@ -49,7 +49,7 @@
     };
     
     var logout = function() {
-      $window.localStorage.removeItem('loc8r-token');
+      $window.localStorage.removeItem('townreport-token');
     };
     
     return {

@@ -1,4 +1,4 @@
-angular.module('loc8rApp', []);
+angular.module('townReport', []);
 
 var _isNumeric = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -49,7 +49,7 @@ var geolocation = function () {
   };
 };
 
-var loc8rData = function ($http) {
+var trData = function ($http) {
   var locationByCoords = function (lat, lng) {
     return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=20');
   };
@@ -58,7 +58,7 @@ var loc8rData = function ($http) {
   };
 };
 
-var locationListCtrl = function ($scope, loc8rData, geolocation) {
+var locationListCtrl = function ($scope, trData, geolocation) {
   $scope.message = "Checking your location";
   
   // if geolocation is successful
@@ -70,9 +70,9 @@ var locationListCtrl = function ($scope, loc8rData, geolocation) {
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
     $scope.message = "Searching for nearby places";
-    // invoke loc8rData service, which returns $http.get call;
+    // invoke trData service, which returns $http.get call;
     // this runs ASYNCHRONOUSLY
-    loc8rData.locationByCoords(lat, lng)
+    trData.locationByCoords(lat, lng)
       // on successful response, pass returned data into callback function
       .success(function(data) {
         $scope.message = data.length > 0 ? "" : "No locations found";
@@ -105,9 +105,9 @@ var locationListCtrl = function ($scope, loc8rData, geolocation) {
 };
   
 angular
-  .module('loc8rApp')
+  .module('ltownReportApp')
   .controller('locationListCtrl', locationListCtrl)
   .filter('formatDistance', formatDistance)
   .directive('ratingStars', ratingStars)
-  .service('loc8rData', loc8rData)
+  .service('trData', trData)
   .service('geolocation', geolocation);

@@ -1,7 +1,7 @@
 (function () {
   
   angular
-    .module('loc8rApp')
+    .module('townReportApp')
     .controller('navigationCtrl', navigationCtrl);
 
   navigationCtrl.$inject = ['$location', 'authentication'];

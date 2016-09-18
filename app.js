@@ -32,7 +32,7 @@ var appClientFiles = [
   'app_client/auth/register/register.controller.js',
   'app_client/auth/login/login.controller.js',
   'app_client/common/services/geolocation.service.js',
-  'app_client/common/services/loc8rData.service.js',
+  'app_client/common/services/trData.service.js',
   'app_client/common/services/authentication.service.js',
   'app_client/common/filters/formatDistance.filter.js',
   'app_client/common/filters/addHtmlLineBreaks.filter.js',
@@ -43,11 +43,11 @@ var appClientFiles = [
   'app_client/common/directives/pageHeader/pageHeader.directive.js'
 ]; 
 var uglified = uglifyJs.minify(appClientFiles, { compress : false });
-fs.writeFile('public/angular/loc8r.min.js', uglified.code, function(err) {
+fs.writeFile('public/angular/townReport.min.js', uglified.code, function(err) {
   if (err) {
     console.log(err);
   } else {
-    console.log('Script generated and saved: loc8r.min.js');
+    console.log('Script generated and saved: townReport.min.js');
   }
 });
 
