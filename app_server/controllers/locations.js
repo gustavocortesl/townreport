@@ -6,7 +6,7 @@ var apiOptions = {
 if (process.env.NODE_ENV === 'production') {
   // if application running in production mode set different
   // base URL; change to be live address of application
-  apiOptions.server = "https://blooming-chamber-56404.herokuapp.com";
+  apiOptions.server = "https://townreport.herokuapp.com";
 }
 
 var _isNumeric = function (n) {
@@ -59,12 +59,12 @@ var _showError = function (req, res, status) {
 
 var renderHomepage = function(req, res){
   res.render('locations-list', {
-    title: 'Loc8r - find a place to work with wifi',
+    title: 'TownReport - find a place to work with wifi',
     pageHeader: {
-      title: 'Loc8r',
+      title: 'TownReport',
       strapline: 'Find places to work with wifi near you!'
     },
-    sidebar: "Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for."
+    sidebar: "Looking for wifi and a seat? TownReport helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let TownReport help you find the place you're looking for."
   });
 };
 
@@ -103,7 +103,7 @@ var renderDetailPage = function (req, res, locDetail) {
     title: locDetail.name,
     pageHeader: {title: locDetail.name},
     sidebar: {
-      context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
+      context: 'is on TownReport because it has accessible wifi and space to sit down with your laptop and get some work done.',
       callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
     },
     // pass full locDetail data object
@@ -121,7 +121,7 @@ module.exports.locationInfo = function(req, res){
 
 var renderReviewForm = function (req, res, locDetail) {
   res.render('location-review-form', {
-    title: 'Review ' + locDetail.name + ' on Loc8r',
+    title: 'Review ' + locDetail.name + ' on TownReport',
     pageHeader: { title: 'Review ' + locDetail.name },
     // send new error variable to view, passing it query parameter when it exists
     error: req.query.err,
