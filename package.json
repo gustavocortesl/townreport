@@ -10,6 +10,7 @@
     "npm": "~2.15.8"
   },
   "dependencies": {
+    "angular-google-maps": "^2.3.4",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",

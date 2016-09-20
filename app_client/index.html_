@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TownReport</title>
-    <!--link rel="stylesheet" href="/bootstrap/css/amelia.bootstrap.css"-->
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/amelia.bootstrap.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <base href="/">
   </head>
   <body ng-view>
-    <!--script src='/angular/lodash.min.js'></script-->
+    <script src='/angular/lodash.min.js'></script>
     <script src="/angular/angular.min.js"></script>
-    <!--script src='/angular/angular-simple-logger.min.js'></script>
-    <script src='/angular/angular-google-maps.min.js'></script-->
-    <script src='//maps.googleapis.com/maps/api/js?key=AIzaSyDo4hJCqtaSCHmthwpigcx8mbB-xEp6GN4'></script>
+    <script src='/angular/angular-simple-logger.min.js'></script>
+    <script src='/angular/angular-google-maps.min.js'></script>
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyDo4hJCqtaSCHmthwpigcx8mbB-xEp6GN4'></script>
     <script src="/lib/angular-route.min.js"></script>
     <script src="/lib/angular-sanitize.min.js"></script>
     <script src="/lib/ui-bootstrap-custom-2.1.2.min.js"></script>
@@ -26,7 +25,7 @@
     <!--script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo4hJCqtaSCHmthwpigcx8mbB-xEp6GN4">
     </script-->
-    <!--script>
+    <script>
     function map_height() {
         var windowHeight = $(window).height();
         var bannerHeight = $("#banner").height();
@@ -41,6 +40,6 @@
         map_height();
         $(window).bind('resize', map_height);
     });
-    </script-->
+    </script>
   </body>
 </html>

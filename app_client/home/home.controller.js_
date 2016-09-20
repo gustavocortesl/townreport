@@ -18,45 +18,23 @@
     };
 
     vm.message = "Checking your location";
-   
-    var mapOptions = {
-        zoom: 15,
-        center: new google.maps.LatLng(36.74, -5.16),
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-    }
-
-    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
   
-    $scope.markers = [];
-    
-    var infoWindow = new google.maps.InfoWindow();
-    
-    var createMarker = function (info){
-        console.log('info:',info);
-        var marker = new google.maps.Marker({
-            map: $scope.map,
-            position: new google.maps.LatLng(info.lat, info.long),
-            title: info.city
-        });
-        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
-        google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<h3 class="info">' + marker.title + '</h3>' + marker.content);
-            infoWindow.open($scope.map, marker);
-        });
-        
-        $scope.markers.push(marker);
-      
-        return marker;
-    }  
-    /*
-    for (i = 0; i < cities.length; i++){
-        createMarker(cities[i]);
-    }
-    */
-    $scope.openInfoWindow = function(e, selectedMarker){
-        e.preventDefault();
-        google.maps.event.trigger(selectedMarker, 'click');
-    }
+    vm.map = {
+        center: {
+          latitude: -23.598763,
+          longitude: -46.676547
+        },
+        zoom: 13,
+        options: {
+            mapTypeId: google.maps.MapTypeId.ROADMAP, // This is an example of a variable that cannot be placed outside of uiGmapGooogleMapApi without forcing of calling ( like ugly people ) the google.map helper outside of the function
+            streetViewControl: false,
+            mapTypeControl: false,
+            scaleControl: false,
+            rotateControl: false,
+            zoomControl: false
+        }
+    };
+    console.log('map:',vm.map); 
     
     vm.getData = function (position) {
       var lat = position.coords.latitude,
@@ -66,14 +44,6 @@
         .success(function(data) {
           vm.message = data.length > 0 ? "" : "No locations found nearby";
           vm.data = { locations: data };
-          for (i = 0; i < data.length; i++){
-            data[i].marker = createMarker({
-              lat: data[i].lat,
-              long: data[i].lng,
-              city: data[i].name,
-              desc: data[i].address
-            });
-          }
         })
         .error(function (e) {
           vm.message = "Sorry, something's gone wrong";

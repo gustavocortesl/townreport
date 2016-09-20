@@ -4,6 +4,32 @@
 .reviewAuthor {margin: 0 5px;}
 .reviewTimestamp {color: #ccc;}
 #filter {margin-left: 4px;}
-/*#map { height: 100%; width:100%;}*/
-#map { height: 400px; width:100%;}
-body { height: 100%; width:100%;}
+/*.map-container { height: 500px; }*/
+#map { height: 80%; width:100%;}
+.infoWindowContent {
+    font-size:  14px !important;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+.infoWindowContent {color: black}
+h3.info {color: black}
+html, body, .full-height {
+    height: 100%;
+}
+#well1 {
+    height: 15%; /*fall back for IE8, Safari 5.1, Opera Mini and pre-4.4 Android browsers*/
+    height: calc(15% - 20px);
+    overflow: hidden; /*better to decide how you want to handle this than to let the browser decide*/
+}
+/*
+#well2 {
+    height: 85%;
+    margin-bottom: 0;
+    overflow: auto;
+}
+*/
+#well2 {
+    height: 80%;
+    margin-bottom: 0;
+    overflow: auto;
+}

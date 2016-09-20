@@ -1,108 +1,39 @@
 <navigation></navigation>
-<div class="container" onclick="initialize()">
+<div class="container full-height">
   <page-header content="vm.pageHeader"></page-header>
-  <div class="row">
-    <div class="col-xs-12 col-sm-8">
+  <div class="row full-height">
+    <div class="col-xs-12 col-sm-8 full-height">
       <label for="filter">Filter results</label>
       <input id="filter" type="text", name="filter", ng-model="textFilter">
       <div class="error">{{ vm.message }}</div>
-      <!--div class="row list-group">
-        <div class="col-xs-12 list-group-item" ng-repeat="location in vm.data.locations | filter : textFilter">
-          <h4>
-            <a href="/#/location/{{ location._id }}">{{ location.name }}</a>
-            <small class="rating-stars" rating-stars rating="location.rating"></small>
-            <span class="badge pull-right badge-default">{{ location.distance | formatDistance }}</span>
-          </h4>
-          <p class="address">{{ location.address }}</p>
-          <p>
-            <span class="label label-warning label-facility" ng-repeat="facility in location.facilities">
-              {{ facility }}
-            </span>
-          </p>
-        </div>
-      </div-->
-      <div id="map"></div>
+      <div class="map-container full-height">
+        <div id="map"></div>
+      </div>
     </div>
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-12 col-sm-4 full-height">
       <!--p class="lead">{{ vm.sidebar.content }}</p-->
-      <div class="row list-group">
+      <div class="well" id="well1">
         <h3>Problem List</h3>
-        <div class="col-xs-12 list-group-item" ng-repeat="location in vm.data.locations | filter : textFilter">
-          <h4>
-            <a href="/#/location/{{ location._id }}">{{ location.name }}</a>
-            <small class="rating-stars" rating-stars rating="location.rating"></small>
-            <span class="badge pull-right badge-default">{{ location.distance | formatDistance }}</span>
-          </h4>
-          <p class="address">{{ location.address }}</p>
-          <p>
-            <span class="label label-warning label-facility" ng-repeat="facility in location.facilities">
-              {{ facility }}
-            </span>
-          </p>
+      </div>
+      <div class="well" id="well2">
+        <div class="row list-group">        
+          <div class="col-xs-12 list-group-item" ng-repeat="location in vm.data.locations | filter : textFilter">
+            <h4>
+              <a href="/#/location/{{ location._id }}">{{ location.name }}</a>
+              <small class="rating-stars" rating-stars rating="location.rating"></small>
+              <span class="badge pull-right badge-default">
+                <a href="#" ng-click="openInfoWindow($event, location.marker)">{{ location.distance | formatDistance }}</a></span>
+            </h4>
+            <p class="address">{{ location.address }}</p>
+            <p>
+              <span class="label label-warning label-facility" ng-repeat="facility in location.facilities">
+                {{ facility }}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>  
   </div>
   <footer-generic></footer-generic>
 </div>
-<script>
-  var initialize = function initialize()
-{
-  var myLatLng = {lat: 36.745, lng: -5.155};
-  var marker;
-console.log('entra la rutina del mapa');
-  var mapOptions = {
-    //center: new google.maps.LatLng(36.745,-5.155),
-    center: myLatLng,
-    zoom:15,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-
-
-
-  //marker.setMap(map);
-
-  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    label: 'E',
-    title: 'Electrical-Power Problem'
-  });
-
-  var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-      '<div id="bodyContent">'+
-      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-      'sandstone rock formation in the southern part of the '+
-      'Northern Territory, central Australia.</p>'+
-      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-      '(last visited June 22, 2009).</p>'+
-      '</div>'+
-      '</div>';
-
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
-
-  marker = new google.maps.Marker({
-    position: new google.maps.LatLng(36.746,-5.16),
-    map: map,
-    draggable:true,
-    title: 'Hello World!'
-  });
-
-  marker.addListener('click', function() {
-    infowindow.open(map, marker);
-  });
-};
-
-//google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-
-<script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo4hJCqtaSCHmthwpigcx8mbB-xEp6GN4&callback=initialize">
-</script>

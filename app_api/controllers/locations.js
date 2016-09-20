@@ -84,6 +84,8 @@ var buildLocationList = function(req, res, results, stats) {
     locations.push({
       //distance: theEarth.getDistanceFromRads(doc.dis),
       distance: meterConversion.mToKm(doc.dis),
+      lng: doc.obj.coords[0],
+      lat: doc.obj.coords[1],
       name: doc.obj.name,
       address: doc.obj.address,
       rating: doc.obj.rating,

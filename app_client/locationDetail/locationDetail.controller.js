@@ -19,6 +19,7 @@
         vm.data = { location: data };
         //console.log('process.env',process.env);
         //vm.data.mapsKey = process.env.MAPS_KEY; // needed for map
+        vm.data.mapsKey = "AIzaSyBzMA1nW7Yg65GNj6R3rlIV4Gjch0v8QlE";
         vm.pageHeader = {
           title: vm.data.location.name
         };
