@@ -19,6 +19,9 @@ html, body, .full-height {
 #well1 {
     height: 15%; /*fall back for IE8, Safari 5.1, Opera Mini and pre-4.4 Android browsers*/
     height: calc(15% - 20px);
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
     overflow: hidden; /*better to decide how you want to handle this than to let the browser decide*/
 }
 /*
@@ -32,4 +35,51 @@ html, body, .full-height {
     height: 80%;
     margin-bottom: 0;
     overflow: auto;
+}
+.navbar-inverse {
+  background: darkred;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a:hover {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a:hover {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a:focus {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+  background-color: #303f9f;
+  color: #eeeeee;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover {
+  color: #000000;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu {
+  background-color: #303f9f;
+  color: #eeeeee;
+}
+.row .copy {
+  margin: 0px auto;
+  padding: 20px 20px;
+  background-color: darkred;
+}
+div.panel-heading {
+  background-color: darkred;
 }

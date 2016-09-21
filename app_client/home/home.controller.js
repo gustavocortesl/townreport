@@ -32,7 +32,7 @@
     var infoWindow = new google.maps.InfoWindow();
     
     var createMarker = function (info){
-        console.log('info:',info);
+        //console.log('info:',info);
         var marker = new google.maps.Marker({
             map: $scope.map,
             position: new google.maps.LatLng(info.lat, info.long),
@@ -55,12 +55,22 @@
     */
     $scope.openInfoWindow = function(e, selectedMarker){
         e.preventDefault();
+        $scope.map.setZoom(19);
         google.maps.event.trigger(selectedMarker, 'click');
     }
-    
+    /*
+    $scope.$watch("map", function (map) {
+        if (map === undefined) {
+            alert("map has no value");
+        } else {
+            alert("map is defined");
+        }
+    }, true);
+    */
     vm.getData = function (position) {
       var lat = position.coords.latitude,
           lng = position.coords.longitude;
+      $scope.map.setCenter(new google.maps.LatLng(lat, lng));
       vm.message = "Searching for nearby places";
       trData.locationByCoords(lat, lng)
         .success(function(data) {
@@ -89,6 +99,7 @@
     vm.noGeo = function () {
       $scope.$apply(function() {
         vm.message = "Geolocation is not supported by this browser.";
+        $scope.map.setCenter(new google.maps.LatLng(36.74, -5.16));
       });
     };
 

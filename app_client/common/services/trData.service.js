@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
   angular
     .module('townReportApp')
@@ -7,7 +7,7 @@
   trData.$inject = ['$http', 'authentication'];
   function trData ($http, authentication) {
     var locationByCoords = function (lat, lng) {
-      return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=200');
+      return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=10');
     };
     
     var locationById = function (locationid) {
@@ -17,7 +17,7 @@
     var addReviewById = function (locationid, data) {
       return $http.post('/api/locations/' + locationid + '/reviews', data, {
         headers: {
-          Authorization: 'Bearer '+ authentication.getToken()
+          Authorization: 'Bearer ' + authentication.getToken()
         }
       });
     };

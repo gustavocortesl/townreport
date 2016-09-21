@@ -2,9 +2,9 @@
 // use it to open Mongoose connection
 var mongoose = require( 'mongoose' );
 var gracefulShutdown;
-var dbURI = 'mongodb://localhost/Loc8r';
+var dbURI = 'mongodb://localhost/TownReport';
 if (process.env.NODE_ENV === 'production') {
-  //dbURI = 'mongodb://gustavocortesl:xto2la22@ds029635.mlab.com:29635/loc8r'
+  //dbURI = 'mongodb://gustavocortesl:xto2la22@ds046549.mlab.com:29635/townreport'
   dbURI = process.env.MONGOLAB_URI;
 }
 mongoose.connect(dbURI);
@@ -69,4 +69,5 @@ process.on('SIGTERM', function() {
 
 // use schemas
 require('./locations');
+require('./problems');
 require('./users');
