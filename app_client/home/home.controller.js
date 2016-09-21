@@ -36,11 +36,16 @@
         var marker = new google.maps.Marker({
             map: $scope.map,
             position: new google.maps.LatLng(info.lat, info.long),
-            title: info.city
+            title: info.name,
+            label: info.category.charAt(0)
         });
-        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+        marker.content = '<div class="infoWindowContent">'
+                        + '<p>' + info.category + '</p>'              
+                        + '<p>' + info.state + '</p>'
+                        + '<p>' + info.desc + '</p>'
+                        + '<p>' + info.address + '<p></div>';
         google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<h3 class="info">' + marker.title + '</h3>' + marker.content);
+            infoWindow.setContent('<h4 class="info">' + marker.title + '</h4>' + marker.content);
             infoWindow.open($scope.map, marker);
         });
         
@@ -48,40 +53,31 @@
       
         return marker;
     }  
-    /*
-    for (i = 0; i < cities.length; i++){
-        createMarker(cities[i]);
-    }
-    */
+    
     $scope.openInfoWindow = function(e, selectedMarker){
         e.preventDefault();
         $scope.map.setZoom(19);
         google.maps.event.trigger(selectedMarker, 'click');
     }
-    /*
-    $scope.$watch("map", function (map) {
-        if (map === undefined) {
-            alert("map has no value");
-        } else {
-            alert("map is defined");
-        }
-    }, true);
-    */
+    
     vm.getData = function (position) {
       var lat = position.coords.latitude,
           lng = position.coords.longitude;
       $scope.map.setCenter(new google.maps.LatLng(lat, lng));
-      vm.message = "Searching for nearby places";
-      trData.locationByCoords(lat, lng)
+      vm.message = "Searching for nearby problems";
+      trData.problemsByCoords(lat, lng)
         .success(function(data) {
-          vm.message = data.length > 0 ? "" : "No locations found nearby";
-          vm.data = { locations: data };
+          vm.message = data.length > 0 ? "" : "No problems found nearby";
+          vm.data = { problems: data };
           for (i = 0; i < data.length; i++){
             data[i].marker = createMarker({
               lat: data[i].lat,
               long: data[i].lng,
-              city: data[i].name,
-              desc: data[i].address
+              name: data[i].name,
+              category: data[i].category,
+              state: data[i].state,
+              desc: data[i].description,
+              address: data[i].address
             });
           }
         })

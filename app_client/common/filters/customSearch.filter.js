@@ -15,7 +15,7 @@
       var regex = new RegExp(text, "i");
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
-        if (regex.test(item.name) || regex.test(item.address)) {
+        if (regex.test(item.name) || regex.test(item.category) || regex.test(item.state) || regex.test(item.desc) || regex.test(item.address)) {
           filtered.push(item);
         }
       }

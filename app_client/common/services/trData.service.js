@@ -6,16 +6,16 @@
 
   trData.$inject = ['$http', 'authentication'];
   function trData ($http, authentication) {
-    var locationByCoords = function (lat, lng) {
-      return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=10');
+    var problemsByCoords = function (lat, lng) {
+      return $http.get('/api/problems?lng=' + lng + '&lat=' + lat + '&maxDistance=10');
     };
     
-    var locationById = function (locationid) {
-      return $http.get('/api/locations/' + locationid);
+    var problemById = function (problemid) {
+      return $http.get('/api/problems/' + problemid);
     };
     
-    var addReviewById = function (locationid, data) {
-      return $http.post('/api/locations/' + locationid + '/reviews', data, {
+    var addCommentById = function (problemid, data) {
+      return $http.post('/api/problems/' + locationid + '/comments', data, {
         headers: {
           Authorization: 'Bearer ' + authentication.getToken()
         }
@@ -23,9 +23,9 @@
     };
     
     return {
-      locationByCoords : locationByCoords,
-      locationById : locationById,
-      addReviewById : addReviewById
+      problemsByCoords : problemsByCoords,
+      problemById : problemById,
+      addCommentById : addCommentById
     };
   }
   

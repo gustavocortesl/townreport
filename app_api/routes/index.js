@@ -31,8 +31,8 @@ router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.revi
 router.get('/problems', ctrlProblems.problemsListByDistance);
 router.post('/problems', ctrlProblems.problemsCreate);
 router.get('/problems/:problemid', ctrlProblems.problemsReadOne);
-router.put('/problems/:problemid', ctrlProblems.problemsUpdateOne);
-router.delete('/problems/:problemid', ctrlProblems.problemsDeleteOne);
+router.put('/problems/:problemid', auth, ctrlProblems.problemsUpdateOne);
+router.delete('/problems/:problemid',auth, ctrlProblems.problemsDeleteOne);
 
 // define routes for comments
 router.post('/locations/:problemid/comments', auth, ctrlComments.commentsCreate);
