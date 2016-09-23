@@ -1,0 +1,107 @@
+<navigation></navigation>
+<div class="container">
+  <page-header content="vm.pageHeader"></page-header>
+  <div class="row">
+    <div class="col-xs-12 col-md-9">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <p class="rating" priority-marks priority="vm.data.problem.priority"></p>
+          <p>{{ vm.data.problem.address }}</p>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">Category</h2>
+            </div>
+            <div class="panel-body">
+              <p>
+                {{ vm.data.problem.category }}
+              </p>
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">State</h2>
+            </div>
+            <div class="panel-body">
+              <span class="label label-warning">
+                <span class="glyphicon glyphicon-ok"></span>{{ vm.data.problem.state }}
+              </span>
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">Description</h2>
+            </div>
+            <div class="panel-body">
+              <p>
+                {{ vm.data.problem.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 location-map">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">Location map</h2>
+            </div>
+            <div class="panel-body">
+              <img src="http://maps.googleapis.com/maps/api/staticmap?key={{vm.data.mapsKey}}&amp;center={{ vm.data.problem.coords[1] }},{{vm.data.problem.coords[0] }}&amp;zoom=18&amp;size=400x350&amp;sensor=false&amp;markers={{vm.data.problem.coords[1] }},{{ vm.data.problem.coords[0] }}&amp;scale=2" class="img-responsive img-rounded">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-3">
+      <!--p class="lead">{{ vm.data.location.name }} is on TownReport because it has accessible wifi and space to sit down with your laptop and get some work done.</p>
+      <p>If you've been and you like it - or if you don't - please leave a review to help other people just like you.</p-->
+      
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-primary comment-panel">
+            <div class="panel-heading">
+              <a ng-show="vm.isLoggedIn" ng-click="vm.popupCommentForm()" href="" class="btn btn-xs btn-primary pull-right">Add comment</a>
+              <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-primary  pull-right">Login to add comment</a>
+              <h2 class="panel-title">User comments</h2>
+            </div>
+            <div class="panel-body comment-container">
+              <div class="comment" ng-repeat="comment in vm.data.problem.comments | orderBy:'createdOn':true">
+                <div class="row">
+                  <div class="well well-sm comment-header">
+                    <span class="commentAuthor">{{ comment.author }}</span>
+                    <small class="commentTimestamp">{{ comment.createdOn | date : 'd MMMM yyyy' }}</small>
+                  </div>
+                  <div class="col-xs-12">
+                    <p ng-bind-html="comment.commentText | addHtmlLineBreaks"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-primary comment-panel">
+            <div class="panel-heading">
+              <a ng-show="vm.isLoggedIn" ng-click="vm.popupStateChangeForm()" href="" class="btn btn-xs btn-primary pull-right">Add state change</a>
+              <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-primary  pull-right">Login to add state change</a>
+              <h2 class="panel-title">State changes</h2>
+            </div>
+            <div class="panel-body comment-container">
+              <div class="statechange" ng-repeat="statechange in vm.data.problem.statechanges | orderBy:'createdOn':true">
+                <div class="row">
+                  <div class="well well-sm review-header">
+                    <span class="commentAuthor">{{ statechange.author }}</span>
+                    <small class="commentTimestamp">{{ statechange.createdOn | date : 'd MMMM yyyy' }}</small>
+                  </div>
+                  <div class="col-xs-12">
+                    <p>{{ statechange.state }}}</p>
+                    <p ng-bind-html="statechange.commentText | addHtmlLineBreaks"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>      
+  </div>
+</div>
+<footer-generic></footer-generic>
+

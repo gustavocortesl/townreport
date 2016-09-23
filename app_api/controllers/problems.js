@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Problem = mongoose.model('Problem');
+var User = mongoose.model('User');
 
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
@@ -125,35 +126,69 @@ module.exports.problemsReadOne = function (req, res) {
 /* /api/problems */
 module.exports.problemsCreate = function(req, res) {
   console.log(req.body);
-  // apply create method to model
-  Problem.create({
-    author: req.body.author,
-    name: req.body.name,
-    category: req.body.category,
-    state: req.body.state,
-    description: req.body.description,
-    address: req.body.address,
-    priority: req.body.priority,
-    // parse coordinates from strings to numbers
-    coords: [parseFloat(req.body.lng), parseFloat(req.body.lat)],
-    comments: [],
-    stateChanges: [{
-      author: req.body.author,
+  getAuthor(req, res, function (req, res, userName) {
+    console.log(req.body);
+    // apply create method to model
+    Problem.create({
+      author: userName,
+      name: req.body.name,
+      category: req.body.category,
       state: req.body.state,
-      commentText: 'New problem created',
-      createdOn: new Date()
-    }]
-  }, function(err, problem) {
-    // callback function, containing appropriate
-    // responses for failure and success
-    if (err) {
-      console.log(err);
-      sendJSONresponse(res, 400, err);
-    } else {
-      console.log(problem);
-      sendJSONresponse(res, 201, problem);
-    }
+      description: req.body.description,
+      address: req.body.address,
+      priority: req.body.priority,
+      // parse coordinates from strings to numbers
+      coords: [parseFloat(req.body.lng), parseFloat(req.body.lat)],
+      comments: [],
+      stateChanges: [{
+        author: userName,
+        state: req.body.state,
+        commentText: 'New problem created',
+        createdOn: Date.now.toISOString
+      }]
+    }, function(err, problem) {
+      // callback function, containing appropriate
+      // responses for failure and success
+      if (err) {
+        console.log(err);
+        sendJSONresponse(res, 400, err);
+      } else {
+        console.log(problem);
+        sendJSONresponse(res, 201, problem);
+      }
+    });
   });
+};
+
+var getAuthor = function(req, res, callback) {
+  console.log("get author");
+  // validate that JWT information is on request object
+  if (req.payload && req.payload.email) {
+    console.log(req.payload);
+    // use email address to find user
+    User
+      .findOne({ email : req.payload.email })
+      .exec(function(err, user) {
+      console.log("dentro",user);
+      if (!user) {
+        sendJSONresponse(res, 404, {
+          "message": "User not found"
+        });
+        return;
+      } else if (err) {
+        console.log(err);
+        sendJSONresponse(res, 404, err);
+        return;
+      }
+      // run callback, passing user’s name
+      callback(req, res, user.name);
+    });
+  } else {
+    sendJSONresponse(res, 404, {
+      "message": "User not found"
+    });
+    return;
+  }
 };
 
 /* PUT /api/problems/:problemid */

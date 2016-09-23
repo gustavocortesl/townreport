@@ -29,7 +29,7 @@ router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.revi
 
 // define routes for problems
 router.get('/problems', ctrlProblems.problemsListByDistance);
-router.post('/problems', ctrlProblems.problemsCreate);
+router.post('/problems', auth, ctrlProblems.problemsCreate);
 router.get('/problems/:problemid', ctrlProblems.problemsReadOne);
 router.put('/problems/:problemid', auth, ctrlProblems.problemsUpdateOne);
 router.delete('/problems/:problemid',auth, ctrlProblems.problemsDeleteOne);

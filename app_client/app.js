@@ -20,6 +20,11 @@
         controller: 'locationDetailCtrl',
         controllerAs: 'vm'
       })
+      .when('/problem/:problemid', {
+        templateUrl: '/problemDetail/problemDetail.view.html',
+        controller: 'problemDetailCtrl',
+        controllerAs: 'vm'
+      })
       .when('/register', {
         templateUrl: '/auth/register/register.view.html',
         controller: 'registerCtrl',
