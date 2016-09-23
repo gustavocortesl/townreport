@@ -6,7 +6,6 @@
       <div class="row">
         <div class="col-xs-12 col-sm-6">
           <p class="rating" priority-marks priority="vm.data.problem.priority"></p>
-          
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h2 class="panel-title">Category</h2>
@@ -91,34 +90,14 @@
             <div class="panel-body comment-container">
               <div class="statechange" ng-repeat="statechange in vm.data.problem.stateChanges | orderBy:'createdOn':true">
                 <div class="row">
-                  <div class="well well-sm review-header">
+                  <div class="well well-sm comment-header">
                     <span class="commentAuthor">{{ statechange.author }}</span>
                     <small class="commentTimestamp">{{ statechange.createdOn | date : 'd MMMM yyyy' }}</small>
                   </div>
                   <div class="col-xs-12">
-                    <table class="table table-condensed table-striped">
-                      
-                      <tr><th>State</th><th>Author</th><th>Date</th><th>Comment</th></tr>
-                      
-                      <tbody>
-                        <tr>
-                          <td>
-                            <span class="commentAuthor">{{ statechange.state }}</span>
-                          </td>
-                          <td>
-                            <span class="commentAuthor">{{ statechange.author }}</span>
-                          </td>
-                          <td>
-                            <small class="commentTimestamp">{{ statechange.createdOn | date : 'd MMMM yyyy' }}</small>
-                          </td>
-                          <td>
-                            <span ng-bind-html="statechange.commentText | addHtmlLineBreaks"></span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <p>{{ statechange.state }}</p>
-                    <p ng-bind-html="statechange.commentText | addHtmlLineBreaks"></p>
+                    <h4><span class="label label-info">{{ statechange.state }}</span>
+                      <small><span ng-bind-html="statechange.commentText | addHtmlLineBreaks"></span></small>
+                    </h4>
                   </div>
                 </div>
               </div>

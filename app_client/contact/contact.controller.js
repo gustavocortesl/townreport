@@ -7,8 +7,9 @@
   function contactCtrl() {
     var vm = this;
     vm.pageHeader = {
-      title: 'Contact Us',
+      title: 'Contact Us'
     };
+    
     vm.main = {
       content: 'OUR ADDRESS\n' +
       'FSWD Capstone Projects\n' +
