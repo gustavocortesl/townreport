@@ -24,7 +24,6 @@
         commentText : formData.commentText
       })
         .success(function (data) {
-          console.log('do add commentttt -', data);
           vm.modal.close(data);
         })
         .error(function (data) {

@@ -20,12 +20,10 @@
       'FEATURES\n' +
       '- The website show in a map the location of registered problems.\n' +
       '- The website show in a list the main data of registered problems.\n' +
-      '- The problems to show can be filtered by category, area, status, date, user…\n' +
-      '- Every problem reported have a details page you can open by clicking/tapping on the map/list.\n' +
-      '- Users will be classified into three categories: citizens, managers, and administrators.\n' +
+      '- The problems to show can be filtered by category, state, date, user…\n' +
+      '- Every problem reported have a details page you can open for more information.\n' +
       '- Citizens can register new problems and see the state of existing ones.\n' +
-      '- Citizens can add comments or more information to any problem reported.\n' +
-      '- Maintenance managers can do as citizens and also they can track the problems and change its state according to the progress of maintenance works.\n'
+      '- Citizens can add comments or more information to any problem reported.\n'
     };
   }
   

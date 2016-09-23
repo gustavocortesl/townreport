@@ -96,6 +96,27 @@
                     <small class="commentTimestamp">{{ statechange.createdOn | date : 'd MMMM yyyy' }}</small>
                   </div>
                   <div class="col-xs-12">
+                    <table class="table table-condensed table-striped">
+                      
+                      <tr><th>State</th><th>Author</th><th>Date</th><th>Comment</th></tr>
+                      
+                      <tbody>
+                        <tr>
+                          <td>
+                            <span class="commentAuthor">{{ statechange.state }}</span>
+                          </td>
+                          <td>
+                            <span class="commentAuthor">{{ statechange.author }}</span>
+                          </td>
+                          <td>
+                            <small class="commentTimestamp">{{ statechange.createdOn | date : 'd MMMM yyyy' }}</small>
+                          </td>
+                          <td>
+                            <span ng-bind-html="statechange.commentText | addHtmlLineBreaks"></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                     <p>{{ statechange.state }}</p>
                     <p ng-bind-html="statechange.commentText | addHtmlLineBreaks"></p>
                   </div>
