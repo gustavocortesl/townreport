@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-6">
           <p class="rating" priority-marks priority="vm.data.problem.priority"></p>
-          <p>{{ vm.data.problem.address }}</p>
+          
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h2 class="panel-title">Category</h2>
@@ -22,19 +22,24 @@
               <h2 class="panel-title">State</h2>
             </div>
             <div class="panel-body">
-              <span class="label label-warning">
-                <span class="glyphicon glyphicon-ok"></span>{{ vm.data.problem.state }}
-              </span>
+              <h1>
+                <span class="label label-warning">
+                  <span class="glyphicon glyphicon-ok"></span>{{ vm.data.problem.state }}
+                </span>
+              </h1>
             </div>
           </div>
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h2 class="panel-title">Description</h2>
+              <h2 class="panel-title">Details</h2>
             </div>
             <div class="panel-body">
-              <p>
-                {{ vm.data.problem.description }}
-              </p>
+              <h4>Description</h4>
+              <p>{{ vm.data.problem.description }}</p>
+              <h4>Address</h4>
+              <p>{{ vm.data.problem.address }}</p>
+              <h4>Coordinates</h4>
+              <p>Latitude: {{ vm.data.problem.coords[1] }}<br>Longitude: {{ vm.data.problem.coords[0] }}</p>
             </div>
           </div>
         </div>
@@ -84,14 +89,14 @@
               <h2 class="panel-title">State changes</h2>
             </div>
             <div class="panel-body comment-container">
-              <div class="statechange" ng-repeat="statechange in vm.data.problem.statechanges | orderBy:'createdOn':true">
+              <div class="statechange" ng-repeat="statechange in vm.data.problem.stateChanges | orderBy:'createdOn':true">
                 <div class="row">
                   <div class="well well-sm review-header">
                     <span class="commentAuthor">{{ statechange.author }}</span>
                     <small class="commentTimestamp">{{ statechange.createdOn | date : 'd MMMM yyyy' }}</small>
                   </div>
                   <div class="col-xs-12">
-                    <p>{{ statechange.state }}}</p>
+                    <p>{{ statechange.state }}</p>
                     <p ng-bind-html="statechange.commentText | addHtmlLineBreaks"></p>
                   </div>
                 </div>

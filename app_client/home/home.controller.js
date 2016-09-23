@@ -55,8 +55,8 @@
                         + '<p>' + info.category + '</p>'  
                         + '<p>' + info.state + '</p>'
                         + '<p>' + info.desc + '</p>'
-                        + '<p>' + info.address + '<p></div>';
-        
+                        + '<p>' + info.address + '<p></div>'
+                        + '<p><small><a href="/#/problem/' + info.id+ '">view details</a></small></p>';
         google.maps.event.addListener(marker, 'click', function () {
             infoWindow.setContent('<h4 class="info">' + marker.title + '</h4>' + marker.content);
             infoWindow.open($scope.map, marker);

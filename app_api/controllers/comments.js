@@ -13,6 +13,7 @@ var sendJSONresponse = function(res, status, content) {
 
 module.exports.commentsCreate = function (req, res) {
   getAuthor(req, res, function (req, res, userName) {
+    console.log('commentsCreate -', userName);
     var problemid = req.params.problemid;
     if (problemid) {
       Problem
@@ -63,9 +64,10 @@ var getAuthor = function(req, res, callback) {
   }
 };
 
-var doAddComment = function(req, res, problemid, author) {
+var doAddComment = function(req, res, problem, author) {
+  console.log('do add problem -', problem);
   if (!problem) {
-    sendJSONresponse(res, 404, "problemid not found");
+    sendJSONresponse(res, 404, "problem not found");
   } else {
     // when provided with a parent document
     // push new data into subdocument array
@@ -73,6 +75,7 @@ var doAddComment = function(req, res, problemid, author) {
       author: author,
       commentText: req.body.commentText
     });
+    console.log(problem);
     problem.save(function(err, problem) {
       var thisComment;
       if (err) {

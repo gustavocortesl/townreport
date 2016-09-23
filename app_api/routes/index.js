@@ -35,16 +35,16 @@ router.put('/problems/:problemid', auth, ctrlProblems.problemsUpdateOne);
 router.delete('/problems/:problemid',auth, ctrlProblems.problemsDeleteOne);
 
 // define routes for comments
-router.post('/locations/:problemid/comments', auth, ctrlComments.commentsCreate);
-router.get('/locations/:problemid/comments/:commentid', ctrlComments.commentsReadOne);
-router.put('/locations/:problemid/comments/:commentid', auth, ctrlComments.commentsUpdateOne);
-router.delete('/locations/:problemid/comments/:commentid', auth, ctrlComments.commentsDeleteOne);
+router.post('/problems/:problemid/comments', auth, ctrlComments.commentsCreate);
+router.get('/problems/:problemid/comments/:commentid', ctrlComments.commentsReadOne);
+router.put('/problems/:problemid/comments/:commentid', auth, ctrlComments.commentsUpdateOne);
+router.delete('/problems/:problemid/comments/:commentid', auth, ctrlComments.commentsDeleteOne);
 
 // define routes for state changes
-router.post('/locations/:problemid/statechanges', auth, ctrlStateChanges.stateChangesCreate);
-router.get('/locations/:problemid/statechanges/:statechangeid', ctrlStateChanges.stateChangesReadOne);
-router.put('/locations/:problemid/statechanges/:statechangeid', auth, ctrlStateChanges.stateChangesUpdateOne);
-router.delete('/locations/:problemid/statechanges/:statechangeid', auth, ctrlStateChanges.stateChangesDeleteOne);
+router.post('/problems/:problemid/statechanges', auth, ctrlStateChanges.stateChangesCreate);
+router.get('/problems/:problemid/statechanges/:statechangeid', ctrlStateChanges.stateChangesReadOne);
+router.put('/problems/:problemid/statechanges/:statechangeid', auth, ctrlStateChanges.stateChangesUpdateOne);
+router.delete('/problems/:problemid/statechanges/:statechangeid', auth, ctrlStateChanges.stateChangesDeleteOne);
 
 // define routes for authentication
 router.post('/register', ctrlAuth.register);

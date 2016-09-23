@@ -63,9 +63,9 @@ var getAuthor = function(req, res, callback) {
   }
 };
 
-var doAddStateChange = function(req, res, problemid, author) {
+var doAddStateChange = function(req, res, problem, author) {
   if (!problem) {
-    sendJSONresponse(res, 404, "problemid not found");
+    sendJSONresponse(res, 404, "problem not found");
   } else {
     // when provided with a parent document
     // push new data into subdocument array
