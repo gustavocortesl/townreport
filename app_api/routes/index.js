@@ -7,25 +7,10 @@ var auth = jwt({
 });
 
 // include controllers
-var ctrlLocations = require('../controllers/locations');
-var ctrlReviews = require('../controllers/reviews');
 var ctrlProblems = require('../controllers/problems');
 var ctrlComments = require('../controllers/comments');
 var ctrlStateChanges = require('../controllers/statechanges');
 var ctrlAuth = require('../controllers/authentication');
-
-// define routes for locations
-router.get('/locations', ctrlLocations.locationsListByDistance);
-router.post('/locations', ctrlLocations.locationsCreate);
-router.get('/locations/:locationid', ctrlLocations.locationsReadOne);
-router.put('/locations/:locationid', ctrlLocations.locationsUpdateOne);
-router.delete('/locations/:locationid', ctrlLocations.locationsDeleteOne);
-
-// define routes for reviews
-router.post('/locations/:locationid/reviews', auth, ctrlReviews.reviewsCreate);
-router.get('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsReadOne);
-router.put('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsUpdateOne);
-router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsDeleteOne);
 
 // define routes for problems
 router.get('/problems', ctrlProblems.problemsListByDistance);
