@@ -1,10 +1,25 @@
+.error {color: crimson}
+.list-group-item {
+  padding: 0px 5px;
+  margin-bottom: 1px;
+}
+.list-group-item>h5 {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
 .comment {padding-bottom: 5px;}
 .panel-body.comment-container {padding-top: 0;}
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: darkred;
+    border-color: darkred;
+}
+.panel-primary {
+    border-color: darkred;
+}
 .comment-header {margin-bottom: 10px;}
 .commentAuthor {margin: 0 5px;}
 .commentTimestamp {color: #ccc;}
-#filter {margin-left: 4px;}
-/*.map-container { height: 500px; }*/
 #map { height: 80%; width:100%;}
 .infoWindowContent {
     font-size:  14px !important;
@@ -25,8 +40,10 @@ html, body, .full-height {
     overflow: ; /*better to decide how you want to handle this than to let the browser decide*/
 }
 #well2 {
-    height: 80%;
+    height: 65%;
+    height: calc(65% + 20px);
     margin-bottom: 0;
+    padding-top: 5px;
     overflow: auto;
 }
 .navbar-inverse {

@@ -2,47 +2,35 @@
 <div class="container">
   <page-header content="vm.pageHeader"></page-header>
   <div class="row">
-    <div class="col-xs-12 col-md-9">
+    <div class="col-xs-12 col-md-8">
       <div class="row">
-        <div class="col-xs-12 col-sm-6">
-          <p class="rating" priority-marks priority="vm.data.problem.priority"></p>
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h2 class="panel-title">Category</h2>
-            </div>
-            <div class="panel-body">
-              <p>
-                {{ vm.data.problem.category }}
-              </p>
-            </div>
-          </div>
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h2 class="panel-title">State</h2>
-            </div>
-            <div class="panel-body">
-              <h1>
-                <span class="label label-warning">
-                  <span class="glyphicon glyphicon-ok"></span>{{ vm.data.problem.state }}
-                </span>
-              </h1>
-            </div>
-          </div>
+        <div class="col-xs-12 col-sm-7">
+          <!--p class="rating" priority-marks priority="vm.data.problem.priority"></p-->
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h2 class="panel-title">Details</h2>
             </div>
             <div class="panel-body">
+              <h4>Category</h4>
+              <p class="lead">{{ vm.data.problem.category }}</p>
+              <h4>State</h4>
+              <h1>
+                <span class="label label-warning">
+                  <span class="glyphicon glyphicon-ok"></span>&nbsp;{{ vm.data.problem.state }}
+                </span>
+              </h1>           
               <h4>Description</h4>
               <p>{{ vm.data.problem.description }}</p>
               <h4>Address</h4>
               <p>{{ vm.data.problem.address }}</p>
               <h4>Coordinates</h4>
               <p>Latitude: {{ vm.data.problem.coords[1] }}<br>Longitude: {{ vm.data.problem.coords[0] }}</p>
+              <h4>Created on</h4>
+              <p>{{ vm.data.problem.createdAt | date : 'd MMMM yyyy, hh:mma' }}</p>
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 location-map">
+        <div class="col-xs-12 col-sm-5 location-map">
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h2 class="panel-title">Location map</h2>
@@ -55,7 +43,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-md-3">
+    <div class="col-xs-12 col-md-4">
       <!--p class="lead">{{ vm.data.location.name }} is on TownReport because it has accessible wifi and space to sit down with your laptop and get some work done.</p>
       <p>If you've been and you like it - or if you don't - please leave a review to help other people just like you.</p-->
       
@@ -63,8 +51,8 @@
         <div class="col-xs-12">
           <div class="panel panel-primary comment-panel">
             <div class="panel-heading">
-              <a ng-show="vm.isLoggedIn" ng-click="vm.popupCommentForm()" href="" class="btn btn-xs btn-primary pull-right">Add comment</a>
-              <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-primary  pull-right">Login to add comment</a>
+              <a ng-show="vm.isLoggedIn" ng-click="vm.popupCommentForm()" href="" class="btn btn-xs btn-danger pull-right">Add comment</a>
+              <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-danger  pull-right">Login to add comment</a>
               <h2 class="panel-title">User comments</h2>
             </div>
             <div class="panel-body comment-container">
@@ -83,8 +71,8 @@
           </div>
           <div class="panel panel-primary comment-panel">
             <div class="panel-heading">
-              <a ng-show="vm.isLoggedIn" ng-click="vm.popupStateChangeForm()" href="" class="btn btn-xs btn-primary pull-right">Add state change</a>
-              <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-primary  pull-right">Login to add state change</a>
+              <a ng-show="vm.isLoggedIn" ng-click="vm.popupStateChangeForm()" href="" class="btn btn-xs btn-danger pull-right">Add state change</a>
+              <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-danger pull-right">Login to add state change</a>
               <h2 class="panel-title">State changes</h2>
             </div>
             <div class="panel-body comment-container">

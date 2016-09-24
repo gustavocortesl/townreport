@@ -24,7 +24,7 @@
     vm.newMarker = null;
     vm.showAlert = false;
 
-    vm.message = "Checking your location";
+    vm.message = "Checking your location...";
    
     vm.isLoggedIn = authentication.isLoggedIn();
 
@@ -33,7 +33,8 @@
     var mapOptions = {
         zoom: 15,
         center: new google.maps.LatLng(36.74, -5.16),
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        minZoom: 14
     }
 
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -146,7 +147,7 @@
       vm.lat = position.coords.latitude,
       vm.lng = position.coords.longitude;
       $scope.map.setCenter(new google.maps.LatLng(vm.lat, vm.lng));
-      vm.message = "Searching for nearby problems";
+      vm.message = "Searching for nearby problems...";
       trData.problemsByCoords(vm.lat, vm.lng)
         .success(function(data) {
           vm.message = data.length > 0 ? "" : "No problems found nearby";

@@ -62,7 +62,8 @@
           problemData : function () {
             return {
               problemid : vm.problemid,
-              problemName : vm.data.problem.name
+              problemName : vm.data.problem.name,
+              problemState : vm.data.problem.state
             };
           }
         }
