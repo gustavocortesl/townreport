@@ -19,16 +19,16 @@
       }
     };
     
-    vm.doAddProblem = function (formData) {
+    vm.doAddProblem = function (newProblemData, formData) {
       trData.addNewProblem({
-        name : vm.formData.name,
-        category : vm.formData.category,
-        state : vm.formData.state,
-        description : vm.formData.description,
-        address : vm.formData.address,
-        priority : vm.formData.priority,
-        lng: vm.newProblemData.lng,
-        lat: vm.newProblemData.lat
+        name : formData.name,
+        category : formData.category,
+        state : formData.state,
+        description : formData.description,
+        address : formData.address,
+        priority : formData.priority,
+        lng: newProblemData.lng,
+        lat: newProblemData.lat
       })
         .success(function (data) {
           vm.modal.close(data);

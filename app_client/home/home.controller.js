@@ -4,46 +4,37 @@
     .module('townReportApp')
     .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['$scope', '$location', '$uibModal', 'trData', 'geolocation', 'authentication'];
-  function homeCtrl ($scope, $location, $uibModal, trData, geolocation, authentication) {
+  homeCtrl.$inject = ['$scope', '$filter', '$location', '$uibModal', 'trData', 'geolocation', 'authentication'];
+  function homeCtrl ($scope, $filter, $location, $uibModal, trData, geolocation, authentication) {
     var vm = this;
     
     vm.pageHeader = {
       title: 'TownReport',
       strapline: 'Help local administration to know where the problems are!'
     };
-
-    vm.sidebar = {
-      content: "Looking for wifi and a seat? TownReport helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let TownReport help you find the place you're looking for."
-    };
     
+    vm.showAlert = false;
+    vm.message = "Checking your location...";
+    vm.isLoggedIn = authentication.isLoggedIn();
+    vm.currentPath = $location.path();
+
     // MAP DATA
     // Coordinates map center
-    var mapCenter = trData.getVarValue("MAP_CENTER");
-    vm.lat = mapCenter[0]; //36.74; // default map center latitude
-    vm.lng = mapCenter[1]; //-5.16; // default map center longitude
-    // Bounds for map
+    vm.lat = 36.74;   //36.74 default map center latitude
+    vm.lng = -5.16;   //-5.16 default map center longitude
     var strictBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(vm.lat - 0.2, vm.lng + 0.2), //(36.72, -5.18) SW
-      new google.maps.LatLng(vm.lat + 0.2, vm.lng - 0.2)  //(36.76, -5.14) NE
+      new google.maps.LatLng(36.72, -5.18), // SW
+      new google.maps.LatLng(36.76, -5.14)  // NE
     );
-      
-    vm.newMarker = null;
-    vm.showAlert = false;
-
-    vm.message = "Checking your location...";
-   
-    vm.isLoggedIn = authentication.isLoggedIn();
-
-    vm.currentPath = $location.path();
-    
     var mapOptions = {
         zoom: 15,
-        center: new google.maps.LatLng(36.74, -5.16),
+        center: new google.maps.LatLng(vm.lat, vm.lng),
         mapTypeId: google.maps.MapTypeId.TERRAIN,
-        minZoom: 13
-    }
-
+        minZoom: 13,
+        streetViewControl:false
+    };
+    
+    // map
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     
     // Listen for the dragend event
@@ -66,8 +57,27 @@
 
       $scope.map.setCenter(new google.maps.LatLng(y, x));
     });
-
+    
+    /*
+    trData.getVarValue("MAP_CENTER")
+      .success(function(data){
+        vm.lat = data[0];
+        vm.lng = data[1];
+        // Bounds for map
+        strictBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(vm.lat - 0.2, vm.lng + 0.2), // SW
+          new google.maps.LatLng(vm.lat + 0.2, vm.lng - 0.2)  // NE
+        );
+        $scope.map.setCenter(new google.maps.LatLng(vm.lat, vm.lng));
+      })
+      .error(function (e) {
+        vm.message = "Showing default map...";
+      });
+    */  
+    
+    // Markers
     $scope.markers = [];
+    vm.newMarker = null;
     
     var infoWindow = new google.maps.InfoWindow();
     
@@ -75,24 +85,24 @@
         //console.log('info:',info);
         var marker = new google.maps.Marker({
             map: $scope.map,
-            position: new google.maps.LatLng(info.lat, info.long),
+            position: new google.maps.LatLng(info.lat, info.lng),
             title: info.name,
             label: info.category.charAt(0)
         });
       
         marker.content = '<div class="infoWindowContent">'
-                        + '<p>' + info.category + '</p>'  
-                        + '<p>' + info.state + '</p>'
-                        + '<p>' + info.desc + '</p>'
-                        + '<p>' + info.address + '<p></div>'
-                        + '<p><small><a href="/#/problem/' + info.id+ '">view details</a></small></p>';
+                        + '<div><span class="label label-warning">' + info.category + '</span>'  
+                        + '<span class="label label-warning">' + info.state + '</span>'
+                        + '<p>' + info.desc + '<br>' + info.address + '</p>'
+                        + '<p><small class="pull-right"><a href="/#/problem/' + info.id+ '">view details</a></small></p></div>';
+        
         google.maps.event.addListener(marker, 'click', function () {
             infoWindow.setContent('<h4 class="info">' + marker.title + '</h4>' + marker.content);
             infoWindow.open($scope.map, marker);
         });
         
         $scope.markers.push(marker);
-        console.log('scope.marker', marker);
+        //console.log('scope.marker', marker);
         return marker;
     }  
     
@@ -129,11 +139,20 @@
         google.maps.event.trigger(selectedMarker, 'click');
     }
     
+    // delete new marker
     vm.deleteNewMarker = function () {
       vm.newMarker.setMap(null);
       vm.newMarker = null;
     }
     
+    // Sets the map on all markers in the array.
+    vm.setMapOnAll = function(map) {
+      for (var i = 0; i < $scope.markers.length; i++) {
+        $scope.markers[i].setMap(map);
+      }
+    }
+    
+    // open modal window to register problem
     vm.popupProblemForm = function () {
       var modalInstance = $uibModal.open({
         templateUrl: '/problemModal/problemModal.view.html',
@@ -157,13 +176,14 @@
         // and add actual marker
         data.marker = createMarker({
           id: data._id,
-          lat: data.lat,
-          long: data.lng,
+          lat: data.coords[1],
+          lng: data.coords[0],
           name: data.name,
           category: data.category,
           state: data.state,
           desc: data.description,
-          address: data.address
+          address: data.address,
+          priority: data.priority
         });
         console.log('data.marker', data.marker);
         // push returned data into array
@@ -174,6 +194,19 @@
         //console.log('new array', vm.data.problems);
       });
     }
+    
+    // text filter
+    $scope.$watch('textFilter', function(newValue, oldValue) {
+      if (!newValue) return;
+      var filtered = $filter('customSearch')(vm.data.problems, newValue);
+      //console.log("filtered", filtered);
+      vm.setMapOnAll(null);
+      $scope.markers = [];
+      for (var i = 0; i < filtered.length; i++) {
+        $scope.markers.push(filtered[i].marker);
+      }
+      vm.setMapOnAll($scope.map);
+    });
     
     vm.getData = function (position) {
       vm.lat = position.coords.latitude,
@@ -188,12 +221,13 @@
             data[i].marker = createMarker({
               id: data[i]._id,
               lat: data[i].lat,
-              long: data[i].lng,
+              lng: data[i].lng,
               name: data[i].name,
               category: data[i].category,
               state: data[i].state,
               desc: data[i].description,
-              address: data[i].address
+              address: data[i].address,
+              priority: data[i].priority
             });
           }
         })

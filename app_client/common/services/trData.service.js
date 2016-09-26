@@ -7,7 +7,7 @@
   trData.$inject = ['$http', 'authentication'];
   function trData ($http, authentication) {
     var problemsByCoords = function (lat, lng) {
-      return $http.get('/api/problems?lng=' + lng + '&lat=' + lat + '&maxDistance=100');
+      return $http.get('/api/problems?lng=' + lng + '&lat=' + lat + '&maxDistance=10');
     };
     
     var problemById = function (problemid) {

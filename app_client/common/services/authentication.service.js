@@ -17,7 +17,7 @@
     
     var isLoggedIn = function() {
       var token = getToken();
-      if(token){
+      if (token) {
         var payload = JSON.parse($window.atob(token.split('.')[1]));
         return payload.exp > Date.now() / 1000;
       } else {
@@ -25,8 +25,16 @@
       }
     };
     
+    var isAdmin = function() {
+      if (isLoggedIn()) {
+        var token = getToken();
+        var payload = JSON.parse($window.atob(token.split('.')[1]));
+        return payload.admin;
+      };
+    };
+    
     var currentUser = function() {
-      if(isLoggedIn()){
+      if (isLoggedIn()) {
         var token = getToken();
         var payload = JSON.parse($window.atob(token.split('.')[1]));
         return {
@@ -57,6 +65,7 @@
       saveToken : saveToken,
       getToken : getToken,
       isLoggedIn : isLoggedIn,
+      isAdmin : isAdmin,
       currentUser : currentUser,
       register : register,
       login : login,

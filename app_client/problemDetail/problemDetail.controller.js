@@ -30,6 +30,8 @@
       });
     
     vm.isLoggedIn = authentication.isLoggedIn();
+    
+    vm.isAdmin = authentication.isAdmin();
 
     vm.currentPath = $location.path();
     
