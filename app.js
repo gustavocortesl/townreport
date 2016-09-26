@@ -25,7 +25,7 @@ app.set('view engine', 'jade');
 // uglifying
 var appClientFiles = [
   'app_client/app.js',
-  'app_client/home/home.controller.js',
+  //'app_client/home/home.controller.js',
   'app_client/about/about.controller.js',
   'app_client/contact/contact.controller.js',
   'app_client/problemDetail/problemDetail.controller.js',

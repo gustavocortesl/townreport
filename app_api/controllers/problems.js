@@ -214,7 +214,11 @@ module.exports.problemsUpdateOne = function(req, res) {
           sendJSONresponse(res, 400, err);
           return;
         }
-        // update paths with values from submitted form
+        // update paths with values from submitted form       
+        for (var prop in req.body) {
+          problem[prop] = req.body[prop];
+        }
+        /*
         problem.author = req.body.author,
         problem.name = req.body.name;
         problem.category = req.body.category,
@@ -222,8 +226,11 @@ module.exports.problemsUpdateOne = function(req, res) {
         problem.description = req.body.description,
         problem.address = req.body.address;
         problem.priority = req.body.priority,
-        problem.facilities = req.body.facilities.split(",");
-        problem.coords = [parseFloat(req.body.lng), parseFloat(req.body.lat)];
+        */
+        
+        //coords will not be updated, it's supposed problems don't move
+        //problem.coords = [parseFloat(req.body.lng), parseFloat(req.body.lat)];
+        
         // save instance and send appropriate response,
         // depending on outcome of save operation
         problem.save(function(err, problem) {

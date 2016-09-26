@@ -68,6 +68,5 @@ process.on('SIGTERM', function() {
 });
 
 // use schemas
-require('./locations');
 require('./problems');
 require('./users');

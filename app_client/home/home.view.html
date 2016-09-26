@@ -30,16 +30,19 @@
         <div class="row list-group">        
           <div class="col-xs-12 list-group-item" ng-repeat="problem in vm.data.problems | customSearch : textFilter">
             <h5>
-              <a href="/#/problem/{{ problem._id }}">{{ problem.name }}</a>
-              <small class="priority" priority-marks priority="problem.priority"></small>
-              <span class="badge pull-right badge-default">
-                <a href="#" ng-click="openInfoWindow($event, problem.marker)">{{ problem.distance | formatDistance }}</a></span>
+              <div>
+                <a href="/#/problem/{{ problem._id }}">{{ problem.name }}</a>
+                <span class="priority" priority-marks priority="problem.priority"></span>
+                <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-map-marker pull-right" ng-click="openInfoWindow($event, problem.marker)">
+                </button>
+              </div>              
             </h5>
             <div>
               <span class="label label-warning">{{ problem.category }}</span>
               <span class="label label-warning">{{ problem.state }}</span><br>
               <small>{{ problem.description }}</small><br>
               <small>{{ problem.address }}</small>
+              <span class="badge badge-default pull-right">{{ problem.distance | formatDistance }}</span>
             </div>
           </div>
         </div>

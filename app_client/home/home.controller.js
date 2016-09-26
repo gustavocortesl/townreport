@@ -17,10 +17,17 @@
       content: "Looking for wifi and a seat? TownReport helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let TownReport help you find the place you're looking for."
     };
     
-    // MAP
-    vm.lat = 36.74, // default map center latitude
-    vm.lng = -5.16, // default map center longitude
-  
+    // MAP DATA
+    // Coordinates map center
+    var mapCenter = trData.getVarValue("MAP_CENTER");
+    vm.lat = mapCenter[0]; //36.74; // default map center latitude
+    vm.lng = mapCenter[1]; //-5.16; // default map center longitude
+    // Bounds for map
+    var strictBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(vm.lat - 0.2, vm.lng + 0.2), //(36.72, -5.18) SW
+      new google.maps.LatLng(vm.lat + 0.2, vm.lng - 0.2)  //(36.76, -5.14) NE
+    );
+      
     vm.newMarker = null;
     vm.showAlert = false;
 
@@ -34,11 +41,32 @@
         zoom: 15,
         center: new google.maps.LatLng(36.74, -5.16),
         mapTypeId: google.maps.MapTypeId.TERRAIN,
-        minZoom: 14
+        minZoom: 13
     }
 
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  
+    
+    // Listen for the dragend event
+    google.maps.event.addListener($scope.map, 'dragend', function() {
+      if (strictBounds.contains($scope.map.getCenter())) return;
+
+      // We're out of bounds - Move the map back within the bounds
+      var c = $scope.map.getCenter(),
+          x = c.lng(),
+          y = c.lat(),
+          minX = strictBounds.getNorthEast().lng(),
+          maxY = strictBounds.getNorthEast().lat(),
+          maxX = strictBounds.getSouthWest().lng(),
+          minY = strictBounds.getSouthWest().lat();
+
+      if (x > minX) x = minX;
+      if (x < maxX) x = maxX;
+      if (y < minY) y = minY;
+      if (y > maxY) y = maxY;
+
+      $scope.map.setCenter(new google.maps.LatLng(y, x));
+    });
+
     $scope.markers = [];
     
     var infoWindow = new google.maps.InfoWindow();
@@ -64,7 +92,7 @@
         });
         
         $scope.markers.push(marker);
-      
+        console.log('scope.marker', marker);
         return marker;
     }  
     
@@ -74,6 +102,7 @@
       if (vm.newMarker) vm.deleteNewMarker();
       
       $scope.map.setCenter(new google.maps.LatLng(vm.lat, vm.lng));
+      $scope.map.setZoom(17);
       vm.newMarker = new google.maps.Marker({
             map: $scope.map,
             zoom: 18,
@@ -123,9 +152,9 @@
       
       // when modal promise is resolved...
       modalInstance.result.then(function (data) {
-        // delete 
+        // delete new marker
         vm.deleteNewMarker();
-        // add actual marker
+        // and add actual marker
         data.marker = createMarker({
           id: data._id,
           lat: data.lat,
@@ -136,10 +165,13 @@
           desc: data.description,
           address: data.address
         });
+        console.log('data.marker', data.marker);
         // push returned data into array
         vm.data.problems.push(data);
+        google.maps.event.trigger($scope.map, 'resize');
+        $scope.map.setZoom(15);
         console.log('new problem', data);
-        console.log('new array', vm.data.problems)
+        //console.log('new array', vm.data.problems);
       });
     }
     

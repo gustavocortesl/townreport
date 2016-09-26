@@ -73,6 +73,16 @@
       modalInstance.result.then(function (data) {
         // push returned data into array of reviews
         vm.data.problem.stateChanges.push(data);
+        // update problem state
+        trData.updateProblem(vm.problemid, { state: data.state })
+        .success(function (data) {          
+          vm.data.problem.state = data.state;
+        })
+        .error(function (data) {
+          console.log("Error!");
+          vm.formError = "Problem state has not been saved";
+        });
+        
       });
     }
     

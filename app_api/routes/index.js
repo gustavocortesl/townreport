@@ -11,6 +11,7 @@ var ctrlProblems = require('../controllers/problems');
 var ctrlComments = require('../controllers/comments');
 var ctrlStateChanges = require('../controllers/statechanges');
 var ctrlAuth = require('../controllers/authentication');
+var ctrlConfig = require('../controllers/configuration');
 
 // define routes for problems
 router.get('/problems', ctrlProblems.problemsListByDistance);
@@ -34,6 +35,9 @@ router.delete('/problems/:problemid/statechanges/:statechangeid', auth, ctrlStat
 // define routes for authentication
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
+
+// define route for config variables
+router.get('/config', ctrlConfig.configData);
 
 // export routes
 module.exports = router;

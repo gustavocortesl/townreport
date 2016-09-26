@@ -20,11 +20,6 @@
         controller: 'contactCtrl',
         controllerAs: 'vm'
       })
-      .when('/location/:locationid', {
-        templateUrl: '/locationDetail/locationDetail.view.html',
-        controller: 'locationDetailCtrl',
-        controllerAs: 'vm'
-      })
       .when('/problem/:problemid', {
         templateUrl: '/problemDetail/problemDetail.view.html',
         controller: 'problemDetailCtrl',

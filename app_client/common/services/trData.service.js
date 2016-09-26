@@ -22,6 +22,14 @@
       });
     };
     
+    var updateProblem = function (problemid, data) {
+      return $http.put('/api/problems/' + problemid, data, {
+        headers: {
+          Authorization: 'Bearer ' + authentication.getToken()
+        }
+      });
+    };
+    
     var addCommentById = function (problemid, data) {
       return $http.post('/api/problems/' + problemid + '/comments', data, {
         headers: {
@@ -38,12 +46,18 @@
       });
     };
     
+    var getVarValue = function (varName) {
+      return $http.get('/api/config?var=' + varName);
+    };
+    
     return {
       problemsByCoords : problemsByCoords,
       problemById : problemById,
       addNewProblem : addNewProblem,
+      updateProblem : updateProblem,
       addCommentById : addCommentById,
-      addStateChangeById : addStateChangeById
+      addStateChangeById : addStateChangeById,
+      getVarValue : getVarValue
     };
   }
   

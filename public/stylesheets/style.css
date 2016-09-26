@@ -79,7 +79,7 @@ html, body, .full-height {
   color: #eeeeee;
 }
 .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover {
-  color: black;
+  color: #ffffff;
 }
 .navbar-inverse .navbar-nav .open .dropdown-menu {
   background-color: crimson;
@@ -97,6 +97,9 @@ html, body, .full-height {
 div.panel-heading {
   background-color: darkred;
 }
+.navbar-brand {
+    padding: 5px 5px;
+}
 #logo {
-  height: 30px;
+  height: 40px;
 }
