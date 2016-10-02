@@ -64,6 +64,7 @@ var getAuthor = function(req, res, callback) {
 };
 
 var doAddStateChange = function(req, res, problem, author) {
+  console.log("problem before", problem);
   if (!problem) {
     sendJSONresponse(res, 404, "problem not found");
   } else {
@@ -74,6 +75,7 @@ var doAddStateChange = function(req, res, problem, author) {
       state: req.body.state,
       commentText: req.body.commentText
     });
+    console.log("problem before", problem);
     problem.save(function(err, problem) {
       var thisStateChange;
       if (err) {

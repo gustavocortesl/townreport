@@ -9,6 +9,15 @@
     var vm = this;
     vm.newProblemData = newProblemData;
     
+    vm.stateOptions = [
+      { name: "New", active: true}
+    ]
+    if (vm.newProblemData.isAdmin) {
+      vm.stateOptions.push({ name: "Pending", active: true});
+      vm.stateOptions.push({ name: "Work in progress", active: true});
+      vm.stateOptions.push({ name: "Fixed", active: true});
+    }
+    
     vm.onSubmit = function () {
       vm.formError = "";
       if(!vm.formData || !vm.formData.name || !vm.formData.category || !vm.formData.state || !vm.formData.description) {
@@ -23,7 +32,7 @@
       trData.addNewProblem({
         name : formData.name,
         category : formData.category,
-        state : formData.state,
+        state : formData.state.name,
         description : formData.description,
         address : formData.address,
         priority : formData.priority,

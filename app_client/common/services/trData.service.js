@@ -6,8 +6,14 @@
 
   trData.$inject = ['$http', 'authentication'];
   function trData ($http, authentication) {
+    
     var problemsByCoords = function (lat, lng) {
       return $http.get('/api/problems?lng=' + lng + '&lat=' + lat + '&maxDistance=10');
+      //return $http.get('/api/problems');
+    };
+    
+    var problemsAll = function () {
+      return $http.get('/api/problems/all');
     };
     
     var problemById = function (problemid) {
@@ -47,11 +53,12 @@
     };
     
     var getVarValue = function (varName) {
-      return $http.get('/api/config?var=' + varName);
+      return $http.post('/api/config', data);
     };
     
     return {
       problemsByCoords : problemsByCoords,
+      problemsAll : problemsAll,
       problemById : problemById,
       addNewProblem : addNewProblem,
       updateProblem : updateProblem,

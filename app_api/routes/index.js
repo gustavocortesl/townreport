@@ -15,6 +15,7 @@ var ctrlConfig = require('../controllers/configuration');
 
 // define routes for problems
 router.get('/problems', ctrlProblems.problemsListByDistance);
+router.get('/problems/all', ctrlProblems.problemsAll);
 router.post('/problems', auth, ctrlProblems.problemsCreate);
 router.get('/problems/:problemid', ctrlProblems.problemsReadOne);
 router.put('/problems/:problemid', auth, ctrlProblems.problemsUpdateOne);
@@ -37,7 +38,7 @@ router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 
 // define route for config variables
-router.get('/config', ctrlConfig.configData);
+router.post('/config', ctrlConfig.configData);
 
 // export routes
 module.exports = router;

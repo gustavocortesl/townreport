@@ -1,11 +1,11 @@
-(function() {
+(function () {
 
   angular
     .module('townReportApp')
     .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['$scope', '$filter', '$location', '$uibModal', 'trData', 'geolocation', 'authentication'];
-  function homeCtrl ($scope, $filter, $location, $uibModal, trData, geolocation, authentication) {
+  homeCtrl.$inject = ['$rootScope', '$scope', '$filter', '$location', '$uibModal', 'trData', 'geolocation', 'authentication'];
+  function homeCtrl($rootScope, $scope, $filter, $location, $uibModal, trData, geolocation, authentication) {
     var vm = this;
     
     vm.pageHeader = {
@@ -16,8 +16,15 @@
     vm.showAlert = false;
     vm.message = "Checking your location...";
     vm.isLoggedIn = authentication.isLoggedIn();
+    vm.isAdmin = authentication.isAdmin();
     vm.currentPath = $location.path();
 
+    // initialize tooltips
+    $scope.$on('$viewContentLoaded', function()
+    {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    
     // MAP DATA
     // Coordinates map center
     vm.lat = 36.74;   //36.74 default map center latitude
@@ -31,35 +38,41 @@
         center: new google.maps.LatLng(vm.lat, vm.lng),
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         minZoom: 13,
-        streetViewControl:false
-    };
+        streetViewControl: false
+      };   
     
     // map
-    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
-    // Listen for the dragend event
-    google.maps.event.addListener($scope.map, 'dragend', function() {
-      if (strictBounds.contains($scope.map.getCenter())) return;
+    function initMap() {
+      $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-      // We're out of bounds - Move the map back within the bounds
-      var c = $scope.map.getCenter(),
-          x = c.lng(),
-          y = c.lat(),
-          minX = strictBounds.getNorthEast().lng(),
-          maxY = strictBounds.getNorthEast().lat(),
-          maxX = strictBounds.getSouthWest().lng(),
-          minY = strictBounds.getSouthWest().lat();
+      $scope.heatmap = new google.maps.visualization.HeatmapLayer({
+        data: [],
+        map: null
+      });
 
-      if (x > minX) x = minX;
-      if (x < maxX) x = maxX;
-      if (y < minY) y = minY;
-      if (y > maxY) y = maxY;
+      // Listen for the dragend event
+      google.maps.event.addListener($scope.map, 'dragend', function() {
+        if (strictBounds.contains($scope.map.getCenter())) return;
 
-      $scope.map.setCenter(new google.maps.LatLng(y, x));
-    });
-    
+        // We're out of bounds - Move the map back within the bounds
+        var c = $scope.map.getCenter(),
+            x = c.lng(),
+            y = c.lat(),
+            minX = strictBounds.getNorthEast().lng(),
+            maxY = strictBounds.getNorthEast().lat(),
+            maxX = strictBounds.getSouthWest().lng(),
+            minY = strictBounds.getSouthWest().lat();
+
+        if (x > minX) x = minX;
+        if (x < maxX) x = maxX;
+        if (y < minY) y = minY;
+        if (y > maxY) y = maxY;
+
+        $scope.map.setCenter(new google.maps.LatLng(y, x));
+      });
+    }
     /*
-    trData.getVarValue("MAP_CENTER")
+    trData.getVarValue({ var: "MAP_CENTER" })
       .success(function(data){
         vm.lat = data[0];
         vm.lng = data[1];
@@ -73,7 +86,7 @@
       .error(function (e) {
         vm.message = "Showing default map...";
       });
-    */  
+    */
     
     // Markers
     $scope.markers = [];
@@ -152,6 +165,41 @@
       }
     }
     
+    // get coordinates
+    vm.getPoints = function (markers) {
+      var points = [];
+      if (markers){
+        markers.forEach(function (marker) {
+            points.push(marker.position);            
+        });
+      }
+      return points;
+    }
+    
+    // show markers/heatmap
+    vm.toggleHeatmap = function () {
+      if ($scope.heatmap.getMap()) {
+        $scope.heatmap.setMap(null);
+        vm.setMapOnAll($scope.map);
+      } else {
+        vm.setMapOnAll(null);
+        $scope.heatmap.setData(vm.getPoints($scope.markers));
+        $scope.heatmap.setMap($scope.map);
+      }
+    }
+    
+    // login/logout done
+    $scope.$on("login", function(data){
+      console.log("login homepage", data);
+      vm.isLoggedIn = authentication.isLoggedIn();
+      vm.isAdmin = authentication.isAdmin();
+    });
+    
+    // call for open modal login
+    vm.callForLoginForm = function () {
+      $rootScope.$broadcast("loginRequest", "homepage");
+    }
+    
     // open modal window to register problem
     vm.popupProblemForm = function () {
       var modalInstance = $uibModal.open({
@@ -163,12 +211,12 @@
               lat : vm.newMarker.getPosition().lat(),
               lng : vm.newMarker.getPosition().lng(),
               newMarker : vm.newMarker,
-              deleteNewMarker: vm.deleteNewMarker
+              deleteNewMarker: vm.deleteNewMarker,
+              isAdmin: vm.isAdmin
             };
           }
         }
       });
-      
       // when modal promise is resolved...
       modalInstance.result.then(function (data) {
         // delete new marker
@@ -250,6 +298,8 @@
     };
 
     geolocation.getPosition(vm.getData, vm.showError, vm.noGeo);
+  
+    initMap();
   }
   
 })();

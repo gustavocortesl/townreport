@@ -7,7 +7,16 @@
   stateChangeModalCtrl.$inject = ['$uibModalInstance', 'trData', 'problemData'];
   function stateChangeModalCtrl ($uibModalInstance, trData, problemData) {
     var vm = this;
+    
     vm.problemData = problemData;
+    
+    vm.stateOptions = [
+      { name: "Rejected", active: false},
+      { name: "New", active: false},
+      { name: "Pending", active: false},
+      { name: "Work in progress", active: false},
+      { name: "Fixed", active: false}
+    ]
 
     vm.onSubmit = function () {
       vm.formError = "";
@@ -21,7 +30,7 @@
     
     vm.doAddStateChange = function (problemid, formData) {
       trData.addStateChangeById(problemid, {
-        state : formData.state,
+        state : formData.state.name,
         commentText : formData.commentText
       })
         .success(function (data) {
@@ -42,6 +51,22 @@
         $uibModalInstance.dismiss('cancel');
       }      
     };
+    
+    vm.setStateOptions = function (state) {
+      var states = ["Rejected", "New", "Pending", "Work in progress", "Fixed"];
+      var position = states.indexOf(state);
+      if (position === 0) {
+        vm.stateOptions[1].active = true
+      } else if (position === vm.stateOptions.length) {
+        vm.stateOptions[vm.stateOptions.length - 2].active = true
+      } else {
+        vm.stateOptions[position - 1].active = true
+        vm.stateOptions[position + 1].active = true
+      }
+    } 
+    
+    vm.setStateOptions(vm.problemData.problemState);
+    
   }
   
 })();

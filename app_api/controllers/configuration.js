@@ -1,5 +1,3 @@
-var passport = require('passport');
-
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
   res.json(content);
@@ -7,7 +5,7 @@ var sendJSONresponse = function(res, status, content) {
 
 module.exports.configData = function(req, res) {
   // respond with an error status if required field are not found
-  if(!req.query.var) {
+  if(!req.body.var) {
     sendJSONresponse(res, 400, {
       "message": "Variable name required"
     });
@@ -15,7 +13,7 @@ module.exports.configData = function(req, res) {
   }
   
   // get variable value
-  var value = process.env[req.query.var];
+  var value = process.env[req.body.var];
   if (!value) {
     sendJSONresponse(res, 404, "Variable not found or undefined.");
   } else {

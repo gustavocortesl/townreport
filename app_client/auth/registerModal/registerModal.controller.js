@@ -2,10 +2,10 @@
   
   angular
     .module('townReportApp')
-    .controller('registerCtrl', registerCtrl);
+    .controller('registerModalCtrl', registerModalCtrl);
   
-  registerCtrl.$inject = ['$location', 'authentication'];
-  function registerCtrl($location, authentication) {
+  registerModalCtrl.$inject = ['$rootScope', '$uibModalInstance', '$location', 'authentication'];
+  function registerModalCtrl($rootScope, $uibModalInstance, $location, authentication) {
     var vm = this;
     
     vm.pageHeader = {
@@ -38,13 +38,28 @@
       vm.formError = "";
       authentication.register(vm.credentials)
       .error(function(err){
-        vm.formError = err;
+        vm.formError = err.message;
       })
       .then(function(){
-        $location.search('page', null);
-        $location.path(vm.returnPage);
+        //$location.search('page', null);
+        //$location.path(vm.returnPage);
+        vm.modal.close();
       });
+      return false;
     };
+    
+    vm.modal = {
+      close : function (result) {
+        $uibModalInstance.close(result);
+        if (result === 'login') {
+          $rootScope.$broadcast("loginRequest", "registerModal");
+        }
+      },
+      cancel : function () {
+        $uibModalInstance.dismiss('cancel');
+      }      
+    };
+    
   }
   
 })();

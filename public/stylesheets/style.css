@@ -17,6 +17,12 @@
 .panel-primary {
     border-color: darkred;
 }
+.comment-container {
+    height: 40%;
+    margin-bottom: 10px;
+    /*padding-top: 5px;*/
+    overflow: auto;
+}
 .comment-header {margin-bottom: 10px;}
 .commentAuthor {margin: 0 5px;}
 .commentTimestamp {color: #ccc;}
@@ -88,17 +94,26 @@ html, body, .full-height {
 .navbar-header {
     height: 30px;
 }
+.navbar-brand {
+    padding: 5px 5px;
+}
 .row .copy {
   margin: 0px auto;
   padding: 20px 20px;
   background-color: darkred;
   color: #eeeeee
 }
+#floating-panel {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  z-index: 5;
+}
 div.panel-heading {
   background-color: darkred;
-}
-.navbar-brand {
-    padding: 5px 5px;
 }
 #logo {
   height: 40px;

@@ -5,8 +5,12 @@
       <h4 id="myModalLabel" class="modal-title">{{ vm.pageHeader.title }}</h4>
     </div>
     <div class="modal-body">
-      <p class="lead">Not a member? Please <a ng-click="vm.modal.close('register')">register</a> first.</p>
-      <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>      
+      <p class="lead">Already a member? Please <a ng-click="vm.modal.close('login')">log in</a> instead.</p>
+      <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
+      <div class="form-group">
+        <label for="name">Full name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your name" ng-model="vm.credentials.name">
+      </div>
       <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="vm.credentials.email">
@@ -15,10 +19,14 @@
         <label for="password">Password</label>
         <input type="password" class="form-control" id="password" placeholder="Password" ng-model="vm.credentials.password">
       </div>
+      <div class="form-group">
+        <label for="password2">Repeat Password</label>
+        <input type="password" class="form-control" id="password2" placeholder="Repeat Password" ng-model="vm.credentials.password2">
+      </div>
     </div>
     <div class="modal-footer">
       <button ng-click="vm.modal.cancel()" type="button" class="btn btn-default">Cancel</button>
-      <button type="submit" class="btn btn-danger">Log in</button>
+      <button type="submit" class="btn btn-danger">Register!</button>
     </div>
   </form>
 </div>

@@ -1,5 +1,5 @@
 <div class="modal-content">
-  <form id="addProblem" name="addRProblem" role="form" ng-submit="vm.onSubmit()" class="form-horizontal">
+  <form id="addProblem" name="addProblem" role="form" ng-submit="vm.onSubmit()" class="form-horizontal">
     <div class="modal-header">
       <button type="button" ng-click="vm.modal.cancel()" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
       <h4 id="myModalLabel" class="modal-title">Add new Problem</h4>
@@ -9,7 +9,7 @@
       <div class="form-group">
         <label for="name" class="col-xs-12 col-sm-2 control-label">Problem</label>
         <div class="col-xs-12 col-sm-10">
-          <input type="text" class="form-control" id="name" placeholder="Enter problem name" ng-model="vm.formData.name">
+          <input type="text" class="form-control input-sm" id="name" placeholder="Enter problem name" ng-model="vm.formData.name">
         </div>
       </div>
       <div class="form-group">
@@ -27,11 +27,7 @@
       <div class="form-group">
         <label for="state" class="col-xs-12 col-sm-2 control-label">State</label>
         <div class="col-xs-12 col-sm-4">
-          <select id="state" name="state" ng-model="vm.formData.state" class="form-control input-sm" placeholder="Select problem state">
-            <option>New</option>
-            <option>Pending</option>
-            <option>Work in progress</option>
-            <option>Fixed</option>
+          <select id="state" name="state" ng-model="vm.formData.state" class="form-control input-sm" ng-options="state.name disable when !state.active for state in vm.stateOptions">
           </select>
         </div>
       </div>
@@ -44,13 +40,13 @@
       <div class="form-group">
         <label for="address" class="col-xs-12 col-sm-2 control-label">Address</label>
         <div class="col-xs-12 col-sm-10">
-          <input id="address" type="text" class="form-control" placeholder="Enter problem approximate direction" ng-model="vm.formData.address">
+          <input id="address" type="text" class="form-control input-sm" placeholder="Enter problem approximate direction" ng-model="vm.formData.address">
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-show="vm.newProblemData.isAdmin">
         <label for="priority" class="col-xs-12 col-sm-2 control-label">Priority</label>
         <div class="col-xs-12 col-sm-2">
-          <select id="priority" name="priority" ng-model="vm.formData.priority" class="form-control input-sm" placeholder="Select problem priority">
+          <select id="priority" name="priority" ng-model="vm.formData.priority" class="form-control input-sm">
             <option>3</option>
             <option>2</option>
             <option>1</option>

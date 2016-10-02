@@ -5,9 +5,9 @@
     .controller('problemDetailCtrl', problemDetailCtrl);
 
   //locationDetailCtrl.$inject = ['$routeParams', 'trData'];
-  problemDetailCtrl.$inject = ['$routeParams', '$location', '$uibModal', 'trData', 'authentication'];
+  problemDetailCtrl.$inject = ['$rootScope', '$scope', '$routeParams', '$location', '$uibModal', 'trData', 'authentication'];
   //function locationDetailCtrl ($routeParams, trData) {
-  function problemDetailCtrl ($routeParams, $location, $uibModal, trData, authentication) {
+  function problemDetailCtrl ($rootScope, $scope, $routeParams, $location, $uibModal, trData, authentication) {
     var vm = this;
     vm.problemid = $routeParams.problemid;
     vm.pageHeader = {
@@ -34,6 +34,17 @@
     vm.isAdmin = authentication.isAdmin();
 
     vm.currentPath = $location.path();
+    
+    $scope.$on("login", function(data){
+      console.log("login detail", data);
+      vm.isLoggedIn = authentication.isLoggedIn();
+      vm.isAdmin = authentication.isAdmin();
+    });
+    
+    // open modal login
+    vm.callForLoginForm = function () {
+      $rootScope.$broadcast("loginRequest", "homepage");
+    }
     
     vm.popupCommentForm = function () {
       var modalInstance = $uibModal.open({

@@ -1,12 +1,20 @@
 <navigation></navigation>
-<div class="container full-height">
+<div id="homepage" class="container full-height">
   <page-header content="vm.pageHeader"></page-header>
   <div class="row full-height">
     <div class="col-xs-12 col-sm-8 full-height">      
       <div class="map-container full-height">
-        <div ng-show="vm.showAlert" class="alert alert-danger fade in">
+        <div ng-show="vm.showAlert" class="col-xs-6 alert alert-danger fade in">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Attention!</strong> To register a new Problem, drag the bouncing marker to the aproximate location and click on it.
+          <strong>Attention!</strong><br>To register a new Problem, drag the bouncing marker to the aproximate location and click on it.
+        </div>
+        <div id="floating-panel" class="col-xs-5">
+          <small><a ng-show="vm.isLoggedIn" ng-click="vm.setNewMarker()" href="" class="btn btn-xs btn-danger">Add problem</a>&nbsp;&nbsp;
+          <!--a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-danger">Login to add problem</a>
+          </small-->
+          <a ng-hide="vm.isLoggedIn" ng-click="vm.callForLoginForm()" class="btn btn-xs btn-danger">Login to add problem</a>
+          </small>
+          <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-fire pull-right" data-toggle="tooltip" data-placement="bottom" title="Toggle heatmap" ng-click="vm.toggleHeatmap()"></button>    
         </div>
         <div id="map"></div>
       </div>
@@ -16,10 +24,9 @@
       <div class="error">{{ vm.message }}</div>
       <div class="well well-sm" id="well1">
         <h4>Problem List
-          <!--a ng-show="vm.isLoggedIn" ng-click="vm.popupProblemForm()" href="" class="btn btn-xs btn-danger pull-right">Add problem</a-->
-          <small><a ng-show="vm.isLoggedIn" ng-click="vm.setNewMarker()" href="" class="btn btn-xs btn-danger pull-right">Add problem</a>
-          <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-xs btn-danger pull-right">Login to add problem</a>
-          </small>
+          <!--small><a ng-show="vm.isLoggedIn" ng-click="vm.setNewMarker()" href="" class="btn btn-xs btn-danger pull-right">Add problem</a>
+          <a ng-hide="vm.isLoggedIn" ng-click="vm.callForLoginForm()" class="btn btn-xs btn-danger pull-right">Login to add problem</a>
+          </small-->
         </h4>
         <div class="form-group has-feedback">
           <input class="form-control" id="filter" type="text" name="filter" ng-model="textFilter" placeholder="filter text...">
@@ -28,12 +35,12 @@
       </div>
       <div class="well" id="well2">
         <div class="row list-group">        
-          <div class="col-xs-12 list-group-item" ng-repeat="problem in vm.data.problems | customSearch : textFilter">
+          <div class="col-xs-12 list-group-item" ng-repeat="problem in vm.data.problems | customSearch : textFilter as problems">
             <h5>
               <div>
                 <a href="/#/problem/{{ problem._id }}">{{ problem.name }}</a>
                 <span class="priority" priority-marks priority="problem.priority"></span>
-                <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-map-marker pull-right" ng-click="openInfoWindow($event, problem.marker)">
+                <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-map-marker pull-right" data-toggle="tooltip" data-placement="left" title="View in map" ng-click="openInfoWindow($event, problem.marker)">
                 </button>
               </div>              
             </h5>
@@ -45,9 +52,13 @@
               <span class="badge badge-default pull-right">{{ problem.distance | formatDistance }}</span>
             </div>
           </div>
+          <div class="col-xs-12 list-group-item" ng-if="problems.length === 0">
+            <strong>No problems found...</strong>
+          </div>
         </div>
       </div>
     </div>  
   </div>
 </div>
 <footer-generic></footer-generic>
+

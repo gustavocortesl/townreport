@@ -2,14 +2,14 @@
 
   angular
     .module('townReportApp')
-    .controller('loginCtrl', loginCtrl);
+    .controller('loginModalCtrl', loginModalCtrl);
   
-  loginCtrl.$inject = ['$location', 'authentication'];
-  function loginCtrl($location, authentication) {
+  loginModalCtrl.$inject = ['$rootScope', '$uibModalInstance', '$location', 'authentication'];
+  function loginModalCtrl($rootScope, $uibModalInstance, $location, authentication) {
     var vm = this;
     
     vm.pageHeader = {
-      title: 'Sign in to TownReport'
+      title: 'User Login'
     };
     
     vm.credentials = {
@@ -33,13 +33,28 @@
       vm.formError = "";
       authentication.login(vm.credentials)
       .error(function(err){
-        vm.formError = err;
+        vm.formError = err.message;
       })
       .then(function(){
-        $location.search('page', null);
-        $location.path(vm.returnPage);
+        //$location.search('page', null);
+        //$location.path(vm.returnPage);
+        vm.modal.close();
       });
+      return false;
     };
+    
+    vm.modal = {
+      close : function (result) {        
+        $uibModalInstance.close(result);
+        if (result === 'register') {
+          $rootScope.$broadcast("registerRequest", "login");
+        }
+      },
+      cancel : function () {
+        $uibModalInstance.dismiss('cancel');
+      }      
+    };
+    
   }
   
 })();
