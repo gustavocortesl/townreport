@@ -47,7 +47,7 @@
       close : function (result) {        
         $uibModalInstance.close(result);
         if (result === 'register') {
-          $rootScope.$broadcast("registerRequest", "login");
+          $rootScope.$broadcast("registerRequest", "loginModal");
         }
       },
       cancel : function () {
